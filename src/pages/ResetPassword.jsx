@@ -77,7 +77,7 @@ const ResetPassword = () => {
         { email, otp, newPassword }
       );
       data.success ? toast.success(data.message) : toast.error(data.message);
-      data.success && navigate("/login");
+      data.success && navigate("/");
     } catch (error) {
       toast.error(error.message);
     }
