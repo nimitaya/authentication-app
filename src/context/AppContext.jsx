@@ -40,6 +40,24 @@ export const AppContextProvider = (props) => {
     }
   };
 
+  // Sende OTP zur E-Mail Verifizierung
+  const sendVerifyOtp = async () => {
+    try {
+      axios.defaults.withCredentials = true;
+      const { data } = await axios.post(
+        `${backendUrl}/api/auth/send-verify-otp`
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   // Aktivieren das einmal am Start
   useEffect(()=>{getAuthState()}, [])
 
@@ -50,6 +68,7 @@ export const AppContextProvider = (props) => {
     userData,
     setUserData,
     getUserData,
+    sendVerifyOtp
   };
   // Verteilen diese Variablen über alle Kinder Componenten
   return (

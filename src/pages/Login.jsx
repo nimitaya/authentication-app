@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   // holen wir aus dem Context
-  const { backendUrl, isLoggedIn, setIsLoggedIn, getUserData } =
+  const { backendUrl, setIsLoggedIn, getUserData, sendVerifyOtp } =
     useContext(AppContext);
 
   const [state, setState] = useState("Sign Up");
@@ -35,6 +35,8 @@ const Login = () => {
         if (data.success) {
           // User wird als eingeloggt angezeigt
           setIsLoggedIn(true);
+          sendVerifyOtp();
+          navigate("/email-verify");
           toast.success(data.message);
         }
       } else {
@@ -43,14 +45,14 @@ const Login = () => {
           email,
           password,
         });
-        
+
         if (data.success) {
           setIsLoggedIn(true);
           getUserData();
           toast.success(data.message);
           navigate("/");
         } else {
-           toast.error(data.message);
+          toast.error(data.message);
         }
       }
     } catch (error) {
